@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - mero_branch  # Specify the branch you want to monitor
+      - master
   pull_request:
     branches:
       - mero_branch # Specify the branch for pull requests
+      - master
 
 jobs:
   build:
