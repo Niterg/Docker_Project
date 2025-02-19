@@ -1,0 +1,38 @@
+name: Docker Flask CI
+
+on:
+  push:
+    branches:
+      - mero_branch  # Specify the branch you want to monitor
+  pull_request:
+    branches:
+      - mero_branch # Specify the branch for pull requests
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Change this to your self-hosted runner if needed
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker image
+      run: |
+        docker build -t flask-app:latest .
+
+    - name: Run Docker container
+      run: |
+        docker run -d -p 5000:5000 --name flask-app flask-app:latest
+        sleep 5  # Wait for the app to start
+
+    - name: Test Flask application
+      run: |
+        curl -f http://localhost:5000 || exit 1  # Check if the app is running
+
+    - name: Stop and remove Docker container
+      run: |
+        docker stop flask-app || true
+        docker rm flask-app || true
