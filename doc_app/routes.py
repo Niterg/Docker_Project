@@ -12,3 +12,8 @@ def index():
 def get_users():
     users = User.query.all()
     return jsonify([user.username for user in users])
+
+
+@app.route('/new')
+def new():
+    return 'This is business'
