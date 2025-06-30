@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    sh 'docker-compose build'
+                    docker-compose build
                 }
             }
         }
@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     // Run tests (if applicable)
-                    sh 'docker-compose run web python -m unittest discover'
+                    docker-compose run web python -m unittest discover
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     // Deploy the application
-                    sh 'docker-compose up -d'
+                    docker-compose up -d
                 }
             }
         }
