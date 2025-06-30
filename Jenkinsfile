@@ -24,14 +24,15 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    bat "docker run -d -p ${APP_PORT}:${APP_PORT} --name ${CONTAINER_NAME} ${IMAGE_NAME}:${IMAGE_TAG}"
-                    bat "timeout /t 5 >nul" // sleep 5s on Windows
-                }
-            }
+       stage('Run Docker Container') {
+    steps {
+        script {
+            bat "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${IMAGE_NAME}:${IMAGE_TAG}"
+            bat "ping -n 6 127.0.0.1 > nul"  // delay ~5s
         }
+    }
+}
+
 
         stage('Test Flask Application') {
             steps {
