@@ -5,8 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build the Docker image
-                    sh 'docker-compose build'
+                    bat 'docker-compose build'
                 }
             }
         }
@@ -14,8 +13,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Run tests (e.g., unit tests inside container)
-                    sh 'docker-compose run web python -m unittest discover'
+                    bat 'docker-compose run web python -m unittest discover'
                 }
             }
         }
@@ -23,8 +21,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Run containers in detached mode
-                    sh 'docker-compose up -d'
+                    bat 'docker-compose up -d'
                 }
             }
         }
